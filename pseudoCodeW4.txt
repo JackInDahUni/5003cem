@@ -1,0 +1,8 @@
+SELECTION_SORT(A)
+	FOR i TO length(A)-1
+		min ← i
+		FOR j ← i + 1 TO length(A)
+			IF A[j] < A[min]
+				min ← j
+		SWAP (A, i, min)
+	RETURN A
