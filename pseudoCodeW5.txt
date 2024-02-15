@@ -1,0 +1,108 @@
+BIN-TREE-FIND(tree, target)
+	cur_node ← tree.root 
+	WHILE cur_node ≠ Ø 
+    		IF cur_node.value = target 
+        		RETURN cur_node (or TRUE)(or cur_node.value)
+    		ELSE IF cur_node.value > target 
+        		cur_node ← cur_node.left
+    		ELSE 
+        		cur_node ← cur_node.right  
+	RETURN FALSE 
+
+BIN-TREE-FIND(tree, target) 
+	IF tree.root
+		if tree._BIN-TREE-FIND(target, tree.root)
+			RETURN True
+		RETURN False
+	ELSE
+		RETURN None
+
+_BIN-TREE-FIND(tree, target, cur_node)
+	IF target > cur_node.data AND cur_node.right
+		RETURN tree._BIN-TREE-FIND(target, cur_node.right)
+	ELSE IF target < cur_node.data AND cur_node.left
+		RETURN tree._BIN-TREE-FIND(target, cur_node.left)
+	IF target == cur_node.data
+		RETURN True
+
+
+##########################################################################################
+
+REMOVE(tree, target)
+	IF tree.root IS None											//if no tree
+		RETURN False
+	ELSE IF tree.root.data = target								//if tree root is target
+		IF tree.root.left IS None AND tree.root.right IS None
+			tree.root ← None
+		ELSE IF tree.root.left AND tree.root.right IS None
+			tree.root ← tree.root.left
+		ELSE IF tree.root.left IS None AND tree.root.right
+			tree.root ← tree.root.right
+		ELSE IF tree.root.left AND tree.root.right
+			IF_LEFT_AND_RIGHT(tree.root)
+
+(continues over)
+																	//if root is not target
+	parent ← None
+	node ← tree.root
+
+	WHILE node and node.data != target
+		parent ← node
+		IF target < node.data
+			node ← node.left
+		ELSE IF target > node.data
+			node ← node.right
+
+	IF node IS None OR node.data != target					//CASE 1: Target not found
+		RETURN False											//for info only (we could not find it)
+
+	ELSE IF node.left IS None AND node.right IS None		//CASE 2: Target has no children
+		IF target < parent.data
+			parent.left ← None
+		ELSE
+			parent.right ← None
+		RETURN True												//info only
+	
+	ELSE IF node.left AND node.right IS None					//CASE 3: Target has left child only
+		IF target < parent.data
+			parent.left ← node.left
+		ELSE
+			parent.right ← node.left
+		RETURN True												//info only
+
+	NOT IMPLEMENTED											//CASE 4: Target has right child only
+
+	ELSE															//CASE 5: Target has left and right children
+		IF_LEFT_AND_RIGHT(node)
+
+
+
+
+
+
+
+
+
+
+(continues over)
+IF_LEFT_AND_RIGHT(node)								//called if delete node whether root or otherwise
+	delNodeParent ← node									//has left and right children
+	delNode = node.right
+	
+	WHILE delNode.left
+		delNodeParent ← delNode
+		delNode ← delNode.left
+
+	node.data ← delNode.data
+	
+	IF delNode.right
+		IF delNodeParent.data > delNode.data
+			delNodeParent.left ← delNode.right
+		ELSE
+			delNodeParent.right ← delNode.right
+	
+	ELSE
+		IF delNode.data < delNodeParent.data
+			delNodeParent.left ← None
+		ELSE
+			delNodeParent.right ← None

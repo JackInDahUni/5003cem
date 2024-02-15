@@ -1,0 +1,10 @@
+add files to git
+
+git add --a 
+git add "filename"
+
+git commit -m "your message"
+
+git push
+
+git pull # pull from github
