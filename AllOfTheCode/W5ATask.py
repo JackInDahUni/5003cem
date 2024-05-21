@@ -29,34 +29,49 @@ class Node:
 """
 
 class BinaryTree:
-
+    # Constructor method to initialize the binary tree
     def __init__(self):
-        self.root = None
+        self.root = None  # Initialize the root node as None when the tree is created
 
+    # Method to insert a new node into the binary tree
     def insert(self, data):
+        # If the tree is empty, create a new node and set it as the root
         if self.root is None:
             self.root = Node(data)
         else:
+            # If the tree is not empty, call the recursive _insert method to insert the new node
             self._insert(data, self.root)
 
+    # Recursive method to insert a new node into the binary tree
     def _insert(self, data, cur_node):
+        # If the data to be inserted is less than the current node's data
         if data < cur_node.data:
+            # If the current node has no left child, create a new node and set it as the left child
             if cur_node.left is None:
                 cur_node.left = Node(data)
             else:
+                # If the current node has a left child, recursively call _insert on the left child
                 self._insert(data, cur_node.left)
+        # If the data to be inserted is greater than the current node's data
         elif data > cur_node.data:
+            # If the current node has no right child, create a new node and set it as the right child
             if cur_node.right is None:
                 cur_node.right = Node(data)
             else:
+                # If the current node has a right child, recursively call _insert on the right child
                 self._insert(data, cur_node.right)
         else:
+            # If the data to be inserted is equal to the current node's data, print a message indicating it's already present
             print("Value already present in tree")
 
+    # Method to display the binary tree (pretty prints the tree)
     def display(self, cur_node):
+        # Call the recursive _display method to get the lines representing the tree
         lines, _, _, _ = self._display(cur_node)
+        # Print each line of the tree
         for line in lines:
             print(line)
+
 
 
     def _display(self, cur_node):
@@ -197,9 +212,15 @@ class BinaryTree:
         node.data = delNode.data                                            # Replace the value of the node to be removed with the value of the delete node
 
         if delNode == delNodeParent.right:                                  # Remove the delete node
-            delNodeParent.right = delNode.right                             # Has at most one right child
+            if delNodeParent.data > delNode.data:
+                delNodeParent.left = delNode.right                          # Has at most one right child
+            else:
+                delNodeParent.right = delNode.right
         else:
-            delNodeParent.left = delNode.right
+            if delNode.data < delNodeParent.data:
+                delNodeParent.left = None
+            else:
+                delNodeParent.right = None
     
 ##########################################################################################
 
